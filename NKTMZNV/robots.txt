@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nktmznv-web.vercel.app/sitemap.xml
