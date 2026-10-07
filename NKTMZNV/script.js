@@ -1,8 +1,8 @@
 // Keep contact details and all editable prices here.
 const siteConfig = {
   email: "wxwstdd@gmail.com",
-  phone: "+47XXXXXXXX",
-  phoneDisplay: "+47 XXX XX XXX",
+  phone: "+4746231251",
+  phoneDisplay: "+47 462 31 251",
   instagram: "https://www.instagram.com/nktmznv/",
   facebook: "https://www.facebook.com/profile.php?id=61586316614468",
   services: [
@@ -552,11 +552,37 @@ menuToggle.addEventListener("click", () => {
 
 document.querySelectorAll("[data-language]").forEach((button) => button.addEventListener("click", () => setLanguage(button.dataset.language)));
 themeToggle.addEventListener("click", () => setTheme(currentTheme === "light" ? "dark" : "light"));
-document.querySelectorAll("[data-order-service]").forEach((button) => button.addEventListener("click", () => {
+function scrollToOrder(updateHash = false) {
+  if (updateHash && window.location.hash !== "#order") {
+    window.history.pushState(null, "", "#order");
+  }
+  const orderSection = document.querySelector("#order");
+  const header = document.querySelector(".header");
+  const headerRect = header.getBoundingClientRect();
+  const headerPosition = window.getComputedStyle(header).position;
+  const headerOffset = ["fixed", "sticky"].includes(headerPosition) && headerRect.bottom > 0
+    ? headerRect.bottom
+    : 0;
+  const breathingRoom = Math.max(12, Math.min(28, window.innerHeight * 0.025));
+  const targetTop = window.scrollY + orderSection.getBoundingClientRect().top - headerOffset - breathingRoom;
+  const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+  window.scrollTo({ top: Math.max(0, targetTop), behavior });
+}
+
+document.addEventListener("click", (event) => {
+  const bookingLink = event.target.closest('a[href="#order"]');
+  if (!bookingLink) return;
+  event.preventDefault();
+  scrollToOrder(true);
+});
+
+serviceGrid.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-order-service]");
+  if (!button) return;
   serviceSelect.value = button.dataset.orderService;
-  document.querySelector("#order").scrollIntoView({ behavior: "smooth" });
+  scrollToOrder();
   serviceSelect.focus({ preventScroll: true });
-}));
+});
 
 document.addEventListener("click", (event) => {
   const projectButton = event.target.closest("[data-project]");

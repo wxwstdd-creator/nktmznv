@@ -24,6 +24,17 @@ function escapeHtml(value) {
   })[character]);
 }
 
+function truncateText(value, maxLength) {
+  if (value.length <= maxLength) return value;
+  if (maxLength < 1) return "";
+  let truncated = "";
+  for (const character of value) {
+    if (truncated.length + character.length + 1 > maxLength) break;
+    truncated += character;
+  }
+  return `${truncated}…`;
+}
+
 function getClientIp(req) {
   const forwardedFor = req.headers["x-forwarded-for"];
   if (typeof forwardedFor === "string") return forwardedFor.split(",").pop().trim();
@@ -142,6 +153,56 @@ async function sendEmail(form) {
   }
 }
 
+function makeTelegramMessage(form) {
+  const details = [
+    ["👤 Name", form.name],
+    ["🏢 Business", form.business],
+    ["📧 Email", form.email],
+    ["📞 Phone", form.phone],
+    ["💻 Service", form.service],
+    ["💰 Budget", form.budget]
+  ];
+  if (form.meetingStart && form.meetingEnd) {
+    details.push(["📅 Meeting", `${form.meetingStart} – ${form.meetingEnd}`]);
+  }
+  if (form.addons.length) details.push(["➕ Add-ons", form.addons.join(", ")]);
+
+  const plainHeading = "🔔 NEW WEBSITE INQUIRY\n\n";
+  const plainDetails = details.map(([label, value]) => `${label}: ${value}`).join("\n");
+  const descriptionLabel = "\n\n💬 Message:\n";
+  const descriptionLimit = Math.max(0, 4096 - plainHeading.length - plainDetails.length - descriptionLabel.length);
+  const clippedDescription = truncateText(form.description, descriptionLimit);
+
+  const htmlDetails = details
+    .map(([label, value]) => `<b>${escapeHtml(label)}:</b> ${escapeHtml(value)}`)
+    .join("\n");
+  return `🔔 <b>NEW WEBSITE INQUIRY</b>\n\n${htmlDetails}${descriptionLabel}${escapeHtml(clippedDescription)}`;
+}
+
+async function sendTelegramNotification(form) {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chatId) {
+    console.error("Telegram inquiry notification skipped because configuration is missing");
+    return;
+  }
+
+  const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: chatId,
+      text: makeTelegramMessage(form),
+      parse_mode: "HTML"
+    }),
+    signal: AbortSignal.timeout(5000)
+  });
+  const result = await response.json();
+  if (!response.ok || result.ok !== true) {
+    console.error("Telegram inquiry notification failed", { status: response.status });
+  }
+}
+
 async function getGoogleAccessToken() {
   const response = await fetch("https://oauth2.googleapis.com/token", {
     method: "POST",
@@ -178,17 +239,17 @@ async function createCalendarEvent(form) {
   }
 }
 
-function getMissingEnvironment(form) {
-  const required = ["RESEND_API_KEY", "RESEND_FROM_EMAIL"];
-  if (form.meetingStart && form.meetingEnd) {
-    required.push(
-      "GOOGLE_CLIENT_ID",
-      "GOOGLE_CLIENT_SECRET",
-      "GOOGLE_REFRESH_TOKEN",
-      "GOOGLE_CALENDAR_ID"
-    );
-  }
-  return required.filter((key) => !process.env[key]);
+function isCalendarConfigured() {
+  return [
+    "GOOGLE_CLIENT_ID",
+    "GOOGLE_CLIENT_SECRET",
+    "GOOGLE_REFRESH_TOKEN",
+    "GOOGLE_CALENDAR_ID"
+  ].every((key) => Boolean(process.env[key]));
+}
+
+function getMissingEnvironment() {
+  return ["RESEND_API_KEY", "RESEND_FROM_EMAIL"].filter((key) => !process.env[key]);
 }
 
 function validateForm(body) {
@@ -264,14 +325,19 @@ module.exports = async function handler(req, res) {
     return respond(res, 429, "Too many requests. Please try again later.");
   }
 
-  if (getMissingEnvironment(form).length) {
+  if (getMissingEnvironment().length) {
     console.error("Order form integrations are missing required environment variables");
     return respond(res, 503, "The request service is not configured yet.");
   }
 
   try {
     await sendEmail(form);
-    if (form.meetingStart && form.meetingEnd) {
+    try {
+      await sendTelegramNotification(form);
+    } catch (error) {
+      console.error("Telegram inquiry notification failed", { error: error.name });
+    }
+    if (form.meetingStart && form.meetingEnd && isCalendarConfigured()) {
       await createCalendarEvent(form);
     }
     return res.status(200).json({ ok: true });
