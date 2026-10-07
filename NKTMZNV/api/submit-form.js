@@ -183,8 +183,7 @@ async function sendTelegramNotification(form) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) {
-    console.error("Telegram inquiry notification skipped because configuration is missing");
-    return;
+    throw new Error("Telegram notification is not configured");
   }
 
   const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
@@ -199,7 +198,7 @@ async function sendTelegramNotification(form) {
   });
   const result = await response.json();
   if (!response.ok || result.ok !== true) {
-    console.error("Telegram inquiry notification failed", { status: response.status });
+    throw new Error("Telegram inquiry notification failed");
   }
 }
 
@@ -248,8 +247,8 @@ function isCalendarConfigured() {
   ].every((key) => Boolean(process.env[key]));
 }
 
-function getMissingEnvironment() {
-  return ["RESEND_API_KEY", "RESEND_FROM_EMAIL"].filter((key) => !process.env[key]);
+function isEmailConfigured() {
+  return Boolean(process.env.RESEND_API_KEY && process.env.RESEND_FROM_EMAIL);
 }
 
 function validateForm(body) {
@@ -325,24 +324,28 @@ module.exports = async function handler(req, res) {
     return respond(res, 429, "Too many requests. Please try again later.");
   }
 
-  if (getMissingEnvironment().length) {
-    console.error("Order form integrations are missing required environment variables");
-    return respond(res, 503, "The request service is not configured yet.");
-  }
-
   try {
-    await sendEmail(form);
-    try {
-      await sendTelegramNotification(form);
-    } catch (error) {
-      console.error("Telegram inquiry notification failed", { error: error.name });
-    }
-    if (form.meetingStart && form.meetingEnd && isCalendarConfigured()) {
-      await createCalendarEvent(form);
-    }
-    return res.status(200).json({ ok: true });
+    await sendTelegramNotification(form);
   } catch (error) {
-    console.error("Order form integrations failed", { error: error.name });
+    console.error("Telegram inquiry notification failed", { error: error.name });
     return respond(res, 502, "We couldn't complete your request right now. Please try again later.");
   }
+
+  if (isEmailConfigured()) {
+    try {
+      await sendEmail(form);
+    } catch (error) {
+      console.error("Order email delivery failed", { error: error.name });
+    }
+  }
+
+  if (form.meetingStart && form.meetingEnd && isCalendarConfigured()) {
+    try {
+      await createCalendarEvent(form);
+    } catch (error) {
+      console.error("Google Calendar event creation failed", { error: error.name });
+    }
+  }
+
+  return res.status(200).json({ ok: true });
 };
