@@ -37,8 +37,19 @@ const translations = {
     heroEyebrow: "UAVHENGIG DIGITALT STUDIO · BERGEN", heroTitle: "Webdesign i Bergen.<br><span>Moderne nettsider</span><br><span class=\"text-outline\">for bedrifter.</span>",
     heroSubtitle: "Jeg designer og utvikler moderne nettsider for små bedrifter – fra første idé til lansering. En gjennomtenkt løsning som fungerer på mobil og datamaskin.",
     orderButton: "BESTILL NETTSIDE", viewServices: "SE ARBEID", heroNote: "DESIGNET FOR FOLK SOM BYGGER NOE",
-    heroVisualLabel: "Nettsidekonsept på en dataskjerm", heroImageAlt: "Arbeidsplass for webdesign og webutvikling",
-    previewHeadline: "Ideer, gjort<br><span>digitale.</span>", previewFooter: "DESIGN MED RETNING",
+    comparisonLabel: "Før- og etter-sammenligning av nettside",
+    comparisonBefore: "FØR", comparisonAfter: "ETTER", comparisonAddress: "NETTSIDEKONSEPT",
+    comparisonBeforeBrand: "DIN BEDRIFT", comparisonBeforeNav: "TJENESTER　OM OSS　KONTAKT",
+    comparisonBeforeEyebrow: "ENKELT. TYDELIG.", comparisonBeforeTitle: "En nettside for din bedrift.",
+    comparisonBeforeCopy: "Informasjon om tjenestene dine og hvordan kundene kan ta kontakt.",
+    comparisonBeforeButton: "TA KONTAKT", comparisonBeforeSection: "VÅRE TJENESTER",
+    comparisonAfterBrand: "DIGITALT STUDIO", comparisonAfterNav: "ARBEID　TJENESTER　KONTAKT",
+    comparisonAfterEyebrow: "NETTSIDER MED RETNING", comparisonAfterTitle: "Bygget for det neste.",
+    comparisonAfterCopy: "En tydelig digital tilstedeværelse, skapt for å ta virksomheten din videre.",
+    comparisonAfterButton: "UTFORSK MULIGHETENE", comparisonAfterSection: "STRATEGI · DESIGN · UTVIKLING",
+    comparisonBeforeAlt: "Skjermbilde av den opprinnelige nettsiden", comparisonAfterAlt: "Skjermbilde av den nye NKTMZNV-nettsiden",
+    comparisonInstructions: "Dra vannrett for å sammenligne. Bruk venstre- og høyrepil for å flytte skillet, eller Home og End for ytterpunktene.",
+    comparisonValue: "FØR: {before} % · ETTER: {after} %",
     heroVisualCaption: "FRA FØRSTE SKISSE TIL SISTE DETALJ", heroBottom: "BYGGET MED KLAR RETNING", scrollServices: "Bla til tjenester",
     manifestoIndex: "ET STERKT FØRSTEINNTRYKK", manifestoEyebrow: "NETTSIDEN ER OFTE FØRSTE MØTE MED MERKEVAREN DIN",
     manifestoTitle: "En god nettside<br><span>gjør inntrykk.</span>",
@@ -138,8 +149,19 @@ const translations = {
     heroEyebrow: "INDEPENDENT DIGITAL STUDIO · BERGEN", heroTitle: "Web design in Bergen.<br><span>Modern websites</span><br><span class=\"text-outline\">for businesses.</span>",
     heroSubtitle: "I design and build modern websites for small businesses, from the first idea to launch. Thoughtful websites made to work on mobile and desktop.",
     orderButton: "ORDER A WEBSITE", viewServices: "VIEW MY WORK", heroNote: "DESIGNED FOR PEOPLE BUILDING SOMETHING",
-    heroVisualLabel: "Website concept displayed on a computer screen", heroImageAlt: "Web design and development workspace",
-    previewHeadline: "Ideas, made<br><span>digital.</span>", previewFooter: "DESIGN WITH INTENT",
+    comparisonLabel: "Before and after website comparison",
+    comparisonBefore: "BEFORE", comparisonAfter: "AFTER", comparisonAddress: "WEBSITE CONCEPT",
+    comparisonBeforeBrand: "YOUR BUSINESS", comparisonBeforeNav: "SERVICES　ABOUT　CONTACT",
+    comparisonBeforeEyebrow: "SIMPLE. CLEAR.", comparisonBeforeTitle: "A website for your business.",
+    comparisonBeforeCopy: "Information about your services and how customers can get in touch.",
+    comparisonBeforeButton: "GET IN TOUCH", comparisonBeforeSection: "OUR SERVICES",
+    comparisonAfterBrand: "DIGITAL STUDIO", comparisonAfterNav: "WORK　SERVICES　CONTACT",
+    comparisonAfterEyebrow: "WEBSITES WITH INTENT", comparisonAfterTitle: "Built for what's next.",
+    comparisonAfterCopy: "A clear digital presence, made to move your business forward.",
+    comparisonAfterButton: "EXPLORE THE POSSIBILITIES", comparisonAfterSection: "STRATEGY · DESIGN · DEVELOPMENT",
+    comparisonBeforeAlt: "Screenshot of the original website", comparisonAfterAlt: "Screenshot of the new NKTMZNV website",
+    comparisonInstructions: "Drag horizontally to compare. Use the left and right arrow keys to move the divider, or Home and End to reach either limit.",
+    comparisonValue: "BEFORE: {before}% · AFTER: {after}%",
     heroVisualCaption: "FROM FIRST SKETCH TO FINAL DETAIL", heroBottom: "BUILT WITH CLEAR INTENT", scrollServices: "Scroll to services",
     manifestoIndex: "A STRONG FIRST IMPRESSION", manifestoEyebrow: "YOUR WEBSITE IS OFTEN YOUR BRAND'S FIRST HELLO",
     manifestoTitle: "Make it<br><span>memorable.</span>",
@@ -250,6 +272,7 @@ const menuToggle = document.querySelector(".menu-toggle");
 const mainNav = document.querySelector("#main-nav");
 const themeToggle = document.querySelector("[data-theme-toggle]");
 const projectDialog = document.querySelector("#project-dialog");
+const websiteComparison = document.querySelector("[data-website-comparison]");
 let formSubmitted = false;
 let isSubmitting = false;
 
@@ -434,6 +457,94 @@ function updateValidationMessages() {
   });
 }
 
+function updateComparisonPosition(position) {
+  const boundedPosition = Math.min(95, Math.max(5, position));
+  const roundedPosition = Math.round(boundedPosition * 10) / 10;
+  websiteComparison.style.setProperty("--comparison-position", `${roundedPosition}%`);
+  websiteComparison.setAttribute("aria-valuenow", String(roundedPosition));
+  websiteComparison.setAttribute("aria-valuetext", translations[currentLanguage].comparisonValue
+    .replace("{before}", String(roundedPosition))
+    .replace("{after}", String(Math.round((100 - roundedPosition) * 10) / 10)));
+}
+
+function initializeWebsiteComparison() {
+  const images = websiteComparison.querySelectorAll("img");
+  images.forEach((image) => {
+    const source = image.dataset.src;
+    if (location.protocol === "file:") return;
+    fetch(source, { method: "HEAD" }).then((response) => {
+      if (!response.ok) return;
+      image.addEventListener("load", () => image.parentElement.classList.add("is-loaded"), { once: true });
+      image.src = source;
+    }).catch((error) => {
+      console.error(`Unable to check comparison image "${source}".`, error);
+    });
+  });
+
+  let activePointerId = null;
+  let hintFrame = 0;
+  const stopHint = () => {
+    if (hintFrame) cancelAnimationFrame(hintFrame);
+    hintFrame = 0;
+  };
+  const markUserInteraction = () => {
+    websiteComparison.classList.add("is-user-controlled");
+    stopHint();
+  };
+  const moveToPointer = (event) => {
+    const bounds = websiteComparison.getBoundingClientRect();
+    if (!bounds.width) return;
+    updateComparisonPosition(((event.clientX - bounds.left) / bounds.width) * 100);
+  };
+
+  websiteComparison.addEventListener("pointerdown", (event) => {
+    if (!event.isPrimary || event.button !== 0) return;
+    markUserInteraction();
+    activePointerId = event.pointerId;
+    websiteComparison.setPointerCapture(event.pointerId);
+    moveToPointer(event);
+  });
+  websiteComparison.addEventListener("pointermove", (event) => {
+    if (event.pointerId === activePointerId) moveToPointer(event);
+  });
+  const endPointer = (event) => {
+    if (event.pointerId === activePointerId) activePointerId = null;
+  };
+  websiteComparison.addEventListener("pointerup", endPointer);
+  websiteComparison.addEventListener("pointercancel", endPointer);
+  websiteComparison.addEventListener("lostpointercapture", endPointer);
+
+  websiteComparison.addEventListener("keydown", (event) => {
+    const currentPosition = Number(websiteComparison.getAttribute("aria-valuenow"));
+    let nextPosition;
+    if (event.key === "ArrowLeft" || event.key === "ArrowDown") nextPosition = currentPosition - 1;
+    else if (event.key === "ArrowRight" || event.key === "ArrowUp") nextPosition = currentPosition + 1;
+    else if (event.key === "Home") nextPosition = 5;
+    else if (event.key === "End") nextPosition = 95;
+    else return;
+    event.preventDefault();
+    markUserInteraction();
+    updateComparisonPosition(nextPosition);
+  });
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const hintStarted = performance.now() + 250;
+  const hintDuration = 1050;
+  const animateHint = (now) => {
+    if (websiteComparison.classList.contains("is-user-controlled")) return;
+    const progress = Math.min(1, Math.max(0, (now - hintStarted) / hintDuration));
+    const phase = progress < 0.5 ? progress * 2 : (1 - progress) * 2;
+    const easedPhase = phase * phase * (3 - 2 * phase);
+    websiteComparison.style.setProperty("--comparison-position", `${50 - 4 * easedPhase}%`);
+    if (progress < 1) hintFrame = requestAnimationFrame(animateHint);
+    else {
+      websiteComparison.style.setProperty("--comparison-position", "50%");
+      hintFrame = 0;
+    }
+  };
+  hintFrame = requestAnimationFrame(animateHint);
+}
+
 function setLanguage(language) {
   if (!translations[language]) return;
   currentLanguage = language;
@@ -456,6 +567,9 @@ function setLanguage(language) {
   document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
     element.setAttribute("aria-label", copy[element.dataset.i18nAriaLabel]);
   });
+  document.querySelectorAll("[data-i18n-alt]").forEach((element) => {
+    element.alt = copy[element.dataset.i18nAlt];
+  });
   document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
     element.placeholder = copy[element.dataset.i18nPlaceholder];
   });
@@ -468,6 +582,7 @@ function setLanguage(language) {
   menuToggle.dataset.i18nAriaLabel = openKey;
   menuToggle.setAttribute("aria-label", copy[openKey]);
   updateThemeToggle();
+  updateComparisonPosition(Number(websiteComparison.getAttribute("aria-valuenow")));
 
   renderSelectOptions();
   renderServiceCards();
@@ -593,6 +708,7 @@ function closeOrderConfirmation() {
 
 renderContactDetails();
 setTheme(currentTheme, false);
+initializeWebsiteComparison();
 setLanguage(currentLanguage);
 observeReveals();
 

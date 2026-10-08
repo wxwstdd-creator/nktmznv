@@ -6,6 +6,10 @@ Static HTML/CSS/JavaScript website with a Vercel serverless endpoint for project
 
 Import this project into Vercel with the project root as the root directory. The site files remain static; `api/submit-form.js` is deployed as a Node.js serverless function at `POST /api/submit-form`. No client-side secrets or additional npm packages are required.
 
+## Hero comparison screenshots
+
+Add the real website screenshots at `assets/before.webp` and `assets/after.webp`. Until then, the hero uses two generic HTML/CSS website concepts as the slider artwork. Add similarly sized landscape screenshots for the cleanest comparison.
+
 Add these environment variables in **Vercel → Project → Settings → Environment Variables**, for every deployment environment that should accept requests, then redeploy:
 
 | Variable | Value |

@@ -96,21 +96,63 @@
           </div>
           <div class="hero__proof"><span class="hero__proof-line"></span><span data-i18n="heroNote">DESIGNET FOR FOLK SOM BYGGER NOE</span></div>
         </div>
-        <div class="hero-visual" data-reveal aria-label="Nettsidekonsept på en dataskjerm" data-i18n-aria-label="heroVisualLabel">
-          <div class="hero-visual__orbit hero-visual__orbit--one" aria-hidden="true"></div>
-          <div class="hero-visual__orbit hero-visual__orbit--two" aria-hidden="true"></div>
-          <div class="site-preview">
-            <div class="site-preview__chrome"><span></span><span></span><span></span><div class="site-preview__address">nktmznv.studio</div><span class="site-preview__dots">···</span></div>
-            <div class="site-preview__screen">
-              <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&amp;fit=crop&amp;w=1200&amp;q=85" alt="Arbeidsplass for webdesign og webutvikling" data-i18n-alt="heroImageAlt">
-              <div class="site-preview__overlay"></div>
-              <div class="site-preview__brand">N K T M Z N V <span>— DIGITAL STUDIO</span></div>
-              <div class="site-preview__headline" data-i18n-html="previewHeadline">Ideer, gjort<br><span>digitale.</span></div>
-              <div class="site-preview__footer"><span data-i18n="previewFooter">DESIGN MED RETNING</span><span aria-hidden="true">↗</span></div>
+        <div class="hero-visual" data-reveal>
+          <div class="website-comparison" data-website-comparison role="slider" tabindex="0" aria-label="Før- og etter-sammenligning av nettside" aria-valuemin="5" aria-valuemax="95" aria-valuenow="50" aria-valuetext="50 % før og 50 % etter" aria-describedby="website-comparison-help" data-i18n-aria-label="comparisonLabel">
+            <div class="website-comparison__chrome" aria-hidden="true">
+              <span class="website-comparison__dots"><i></i><i></i><i></i></span>
+              <span class="website-comparison__address" data-i18n="comparisonAddress">NETTSIDEKONSEPT</span>
+              <span class="website-comparison__chrome-mark">↗</span>
+            </div>
+            <div class="website-comparison__canvas">
+              <div class="website-comparison__image website-comparison__image--before">
+                <div class="website-concept website-concept--before" aria-hidden="true">
+                  <header class="website-concept__header">
+                    <span class="website-concept__brand" data-i18n="comparisonBeforeBrand">DIN BEDRIFT</span>
+                    <nav class="website-concept__nav" data-i18n="comparisonBeforeNav">TJENESTER　OM OSS　KONTAKT</nav>
+                  </header>
+                  <main class="website-concept__main website-concept__main--before">
+                    <p class="website-concept__eyebrow" data-i18n="comparisonBeforeEyebrow">ENKELT. TYDELIG.</p>
+                    <h2 data-i18n="comparisonBeforeTitle">En nettside for din bedrift.</h2>
+                    <p class="website-concept__copy" data-i18n="comparisonBeforeCopy">Informasjon om tjenestene dine og hvordan kundene kan ta kontakt.</p>
+                    <span class="website-concept__button" data-i18n="comparisonBeforeButton">TA KONTAKT</span>
+                    <span class="website-concept__basic-art" aria-hidden="true"><i></i><i></i><i></i></span>
+                    <div class="website-concept__basic-sections">
+                      <strong data-i18n="comparisonBeforeSection">VÅRE TJENESTER</strong>
+                      <span></span><span></span><span></span>
+                    </div>
+                  </main>
+                </div>
+                <img data-src="assets/before.webp" alt="Skjermbilde av den opprinnelige nettsiden" data-i18n-alt="comparisonBeforeAlt" draggable="false">
+              </div>
+              <div class="website-comparison__image website-comparison__image--after">
+                <div class="website-concept website-concept--after" aria-hidden="true">
+                  <header class="website-concept__header">
+                    <span class="website-concept__brand" data-i18n="comparisonAfterBrand">DIGITALT STUDIO</span>
+                    <nav class="website-concept__nav" data-i18n="comparisonAfterNav">ARBEID　TJENESTER　KONTAKT</nav>
+                  </header>
+                  <main class="website-concept__main website-concept__main--after">
+                    <p class="website-concept__eyebrow" data-i18n="comparisonAfterEyebrow">NETTSIDER MED RETNING</p>
+                    <h2 data-i18n="comparisonAfterTitle">Bygget for det neste.</h2>
+                    <p class="website-concept__copy" data-i18n="comparisonAfterCopy">En tydelig digital tilstedeværelse, skapt for å ta virksomheten din videre.</p>
+                    <span class="website-concept__button" data-i18n="comparisonAfterButton">UTFORSK MULIGHETENE <i aria-hidden="true">↗</i></span>
+                    <div class="website-concept__feature">
+                      <span class="website-concept__feature-index">01 / 03</span>
+                      <span class="website-concept__feature-art" aria-hidden="true"><i></i><i></i><i></i></span>
+                      <span class="website-concept__feature-caption" data-i18n="comparisonAfterSection">STRATEGI · DESIGN · UTVIKLING</span>
+                    </div>
+                  </main>
+                </div>
+                <img data-src="assets/after.webp" alt="Skjermbilde av den nye NKTMZNV-nettsiden" data-i18n-alt="comparisonAfterAlt" draggable="false">
+              </div>
+              <span class="website-comparison__label website-comparison__label--before" data-i18n="comparisonBefore">FØR</span>
+              <span class="website-comparison__label website-comparison__label--after" data-i18n="comparisonAfter">ETTER</span>
+              <span class="website-comparison__divider" aria-hidden="true">
+                <span class="website-comparison__handle">← →</span>
+              </span>
             </div>
           </div>
-          <div class="hero-visual__caption"><span class="caption-index">01</span><span data-i18n="heroVisualCaption">FRA FØRSTE SKISSE TIL SISTE DETALJ</span></div>
-          <div class="hero-visual__signal"><span></span><span>WEB / 01</span></div>
+          <p class="visually-hidden" id="website-comparison-help" data-i18n="comparisonInstructions">Dra vannrett for å sammenligne. Bruk venstre- og høyrepil for å flytte skillet, eller Home og End for ytterpunktene.</p>
+          <div class="hero-visual__caption"><span class="caption-index">01</span><span aria-hidden="true">—</span><span data-i18n="heroVisualCaption">FRA FØRSTE SKISSE TIL SISTE DETALJ</span></div>
         </div>
       </div>
       <div class="hero__bottom"><span>59°54' N &nbsp; 10°45' E</span><span data-i18n="heroBottom">BYGGET MED KLAR RETNING</span><a href="#services" aria-label="Bla til tjenester" data-i18n-aria-label="scrollServices">01 <span aria-hidden="true">↓</span></a></div>
