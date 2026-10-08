@@ -6,9 +6,10 @@ const siteConfig = {
   instagram: "https://www.instagram.com/nktmznv/",
   facebook: "https://www.facebook.com/profile.php?id=61586316614468",
   services: [
-    { id: "landing", price: 2500 },
-    { id: "business", price: 5000 },
-    { id: "premium", price: 8000 }
+    { id: "landing", price: 2990 },
+    { id: "business", price: 5990 },
+    { id: "premium", price: 9990 },
+    { id: "custom", price: 12000 }
   ],
   addons: [
     { id: "booking", price: 1500 },
@@ -33,67 +34,87 @@ const translations = {
     navHome: "Hjem", navServices: "Tjenester", navPricing: "Priser", navProcess: "Prosess", navContact: "Kontakt",
     socialLabel: "Sosiale medier", languageLabel: "Velg språk", norwegianLabel: "Norsk", englishLabel: "Engelsk",
     switchToDark: "Bytt til mørkt tema", switchToLight: "Bytt til lyst tema",
-    heroEyebrow: "UAVHENGIG DIGITALT STUDIO · BERGEN", heroTitle: "WEBDESIGN I BERGEN.<br><span>MODERNE NETTSIDER</span><br><span class=\"text-outline\">FOR BEDRIFTER.</span>",
-    heroSubtitle: "Jeg tilbyr webdesign og webutvikling i Bergen og ellers i Norge, og lager moderne nettsider for bedrifter.",
-    orderButton: "BESTILL NETTSIDE", viewServices: "SE TJENESTER", heroNote: "DESIGNET FOR FOLK SOM BYGGER NOE",
+    heroEyebrow: "UAVHENGIG DIGITALT STUDIO · BERGEN", heroTitle: "Webdesign i Bergen.<br><span>Moderne nettsider</span><br><span class=\"text-outline\">for bedrifter.</span>",
+    heroSubtitle: "Jeg designer og utvikler moderne nettsider for små bedrifter – fra første idé til lansering. En gjennomtenkt løsning som fungerer på mobil og datamaskin.",
+    orderButton: "BESTILL NETTSIDE", viewServices: "SE ARBEID", heroNote: "DESIGNET FOR FOLK SOM BYGGER NOE",
     heroVisualLabel: "Nettsidekonsept på en dataskjerm", heroImageAlt: "Arbeidsplass for webdesign og webutvikling",
     previewHeadline: "Ideer, gjort<br><span>digitale.</span>", previewFooter: "DESIGN MED RETNING",
     heroVisualCaption: "FRA FØRSTE SKISSE TIL SISTE DETALJ", heroBottom: "BYGGET MED KLAR RETNING", scrollServices: "Bla til tjenester",
     manifestoIndex: "ET STERKT FØRSTEINNTRYKK", manifestoEyebrow: "NETTSIDEN ER OFTE FØRSTE MØTE MED MERKEVAREN DIN",
     manifestoTitle: "En god nettside<br><span>gjør inntrykk.</span>",
-    manifestoBody: "En god nettside gjør det enkelt for kundene å forstå hva bedriften tilbyr, bli trygge på deg og ta neste steg.",
-    servicesEyebrow: "TJENESTER", servicesTitle: "WEBDESIGN OG<br><span>WEBUTVIKLING.</span>",
-    servicesIntro: "Jeg lager moderne nettsider for bedrifter i Bergen og resten av Norge, fra webdesign til ferdig utviklet løsning.",
+    manifestoBody: "Nettsiden din skal gjøre det lett å forstå hva du tilbyr og hvordan kundene kan komme i kontakt. Jeg bygger med tydelig innhold, gjennomtenkt design og mobilbruk i fokus.",
+    valuePoints: ["Skreddersydd design for bedriften din", "Mobiltilpasset fra første skisse", "Responsiv utvikling for mobil, nettbrett og desktop", "SEO-vennlig struktur og teknisk grunnlag", "Norsk og engelsk når prosjektet trenger det", "Fra idé og innhold til ferdig lansering"],
+    servicesEyebrow: "TJENESTER", servicesTitle: "DET JEG KAN<br><span>HJELPE MED.</span>",
+    servicesIntro: "Fra første visuelle retning til ferdig nettside – velg tjenestene prosjektet ditt trenger.",
+    serviceCategories: [
+      { title: "Webdesign", description: "En tydelig visuell retning og et skreddersydd uttrykk som passer merkevaren og kundene dine." },
+      { title: "Webutvikling", description: "Designet bygges om til en fungerende nettside med struktur og innhold tilpasset virksomheten." },
+      { title: "Responsivt design", description: "En gjennomarbeidet opplevelse på mobil, nettbrett og større skjermer." },
+      { title: "SEO-grunnlag", description: "Semantisk innhold og teknisk struktur som gir søkemotorer et ryddig utgangspunkt." },
+      { title: "Funksjonalitet", description: "Bestilling, skjema og andre funksjoner kan tilpasses behovene i prosjektet." },
+      { title: "Redesign", description: "Oppdater uttrykk, innhold og brukeropplevelse på en eksisterende nettside." }
+    ],
     addonsEyebrow: "BYGG VIDERE", addonsTitle: "Tilleggstjenester", addonsIntro: "Velg tillegg i bestillingsskjemaet, så tar vi det med i forespørselen.",
-    pricingNote: "Alle priser er veiledende fra-priser i NOK. Endelig omfang avklares før oppstart.",
-    serviceNames: { landing: "Landingsside", business: "Bedriftsnettside", premium: "Premium nettside" },
+    pricingEyebrow: "TYDELIGE FRA-PRISER", pricingTitle: "VELG ET<br><span>UTGANGSPUNKT.</span>",
+    pricingIntro: "Prisene gir et utgangspunkt. Vi avklarer innhold, omfang og endelig pris før arbeidet starter.",
+    pricingNote: "Fra-priser i NOK. Endelig omfang og pris avtales før oppstart.",
+    packageTag: "NETTSIDEPAKKE", recommended: "ANBEFALT",
+    serviceNames: { landing: "Starter", business: "Business", premium: "Premium", custom: "Custom" },
     serviceDescriptions: {
-      landing: "En tydelig og moderne start for bedrifter som trenger en sterk tilstedeværelse på nett.",
-      business: "En komplett nettside for små bedrifter, bygget for å svare på kundenes spørsmål og skape kontakt.",
-      premium: "En mer avansert nettside for bedrifter som vil ha en særegen digital opplevelse."
+      landing: "En profesjonell landingsside med tydelig innhold og en enkel vei til kontakt.",
+      business: "En komplett bedriftsnettside med opptil fem sider, kontaktskjema og grunnleggende SEO.",
+      premium: "Et mer omfattende nettsted med skreddersydd design og utvidede funksjoner.",
+      custom: "Et tilpasset omfang og funksjonalitet ut fra målene for prosjektet."
     },
     serviceFeatures: {
-      landing: ["Moderne design", "Responsivt oppsett", "Tilpasset mobil", "Kontaktknapper", "Enkle animasjoner"],
+      landing: ["Én landingsside", "Responsivt design", "Kontaktknapper", "Grunnleggende SEO"],
       business: ["Opptil 5 sider", "Skreddersydd design", "Responsivt design", "Kontaktskjema", "Integrasjon med sosiale medier", "Animasjoner", "Grunnleggende SEO"],
-      premium: ["Skreddersydd UI/UX", "Avanserte animasjoner", "Bestillingsfunksjon", "Flerspråklig støtte", "Avansert responsivt design", "SEO-optimalisering", "Tilpassede interaksjoner"]
+      premium: ["Skreddersydd design", "Responsiv utvikling", "Utvidet funksjonalitet", "Avansert SEO-arbeid"],
+      custom: ["Omfang tilpasset prosjektet", "Funksjonalitet etter behov", "Pris avklares før oppstart"]
     },
-    priceFrom: "Fra", orderService: "BESTILL", serviceTag: "NETTSIDETJENESTE",
+    priceFrom: "Fra",
     addons: {
       booking: "Bestillingsfunksjon", extraPage: "Ekstra underside", languages: "Norsk + engelsk", animations: "Avanserte animasjoner", custom: "Tilpasset funksjonalitet"
     },
     addonPrice: "Pris", contactForPrice: "Ta kontakt for pris", addonSelect: "Legg til i forespørselen",
     processEyebrow: "EN TYDELIG PROSESS", processTitle: "Fra idé til<br><span>lansering.</span>",
-    processIntro: "Fra planlegging til lansering får du tydelige avklaringer, jevn fremdrift og oversikt over neste steg.",
+    processIntro: "Fire tydelige steg tar prosjektet fra behovsavklaring og design til utvikling, gjennomgang og lansering.",
     process: [
-      { title: "Fortell hva du trenger", description: "Vi avklarer mål, innhold og hva nettsiden skal gjøre for bedriften din." },
-      { title: "Jeg lager designet", description: "Jeg former uttrykket og bygger en fungerende førsteversjon." },
-      { title: "Du går gjennom nettsiden", description: "Du gir tilbakemeldinger, og vi finpusser detaljene sammen." },
-      { title: "Nettsiden går live", description: "Når alt er godkjent, klargjøres nettsiden for publisering." }
+      { title: "Avklar behovet", description: "Vi går gjennom mål, innhold, omfang og hva nettsiden skal hjelpe kundene dine med." },
+      { title: "Design retningen", description: "Jeg lager et visuelt uttrykk og en struktur som passer merkevaren og innholdet." },
+      { title: "Bygg og finpuss", description: "Nettsiden utvikles, du går gjennom den, og vi gjør avtalte justeringer." },
+      { title: "Klargjør lansering", description: "Etter godkjenning gjør vi nettsiden klar for publisering." }
     ],
     portfolioEyebrow: "UTVALGTE KONSEPTER", portfolioTitle: "UTVALGT<br><span>ARBEID.</span>",
     portfolioIntro: "Konsepter som viser hvordan tydelig design kan gi små merkevarer en sterkere digital tilstedeværelse.",
     portfolioDisclaimer: "Prosjektene er konseptarbeid og demoer, ikke oppdrag for ekte kunder.", concept: "KONSEPT", demo: "DEMO",
+    projectTypes: { cleancar: "BILPLEIE · BESTILLINGSFLYT", local: "LOKAL TJENESTEBEDRIFT", creative: "PERSONLIG MERKEVARE · LANDINGSSIDE" },
     projects: {
       cleancar: { name: "CleanCar Bergen", description: "Konsept for bilpleie med tydelig tjenestemeny og en enkel digital bestillingsflyt.", alt: "Konseptbilde av blank sportsbil for CleanCar Bergen" },
       local: { name: "Lokal bedrift", description: "Et varmt, ryddig nettstedskonsept for en lokal tjenestebedrift.", alt: "Lyst, moderne arbeidsmiljø for nettstedskonseptet Lokal bedrift" },
       creative: { name: "Kreativ landingsside", description: "En visuell landingsside for en personlig merkevare og et kreativt tilbud.", alt: "Digitalt prosjektoversyn for et konsept til en kreativ landingsside" }
     },
-    viewProject: "SE KONSEPT", projectDialogLabel: "Prosjektkonsept", conceptNote: "Konseptarbeid — ikke et publisert kundeprosjekt.", closeDialog: "Lukk prosjektvisning",
+    viewProject: "SE PROSJEKT", projectDialogLabel: "Prosjektkonsept", conceptNote: "Konseptarbeid — ikke et publisert kundeprosjekt.", closeDialog: "Lukk prosjektvisning",
     whyEyebrow: "SAMARBEID, MED RETNING", whyTitle: "Hvorfor<br><span>velge meg?</span>",
     benefits: [
-      { title: "MODERNE DESIGN", description: "Nettsider utformet med et moderne og gjennomtenkt visuelt uttrykk.", mark: "01 / ✳" },
-      { title: "MOBILEN FØRST", description: "Alt fungerer godt på telefon, nettbrett og datamaskin.", mark: "02 / ↗" },
-      { title: "EFFEKTIV LEVERING", description: "En ryddig utviklingsprosess med effektiv fremdrift og rask kommunikasjon.", mark: "03 / →" },
-      { title: "PERSONLIG SAMARBEID", description: "Hver nettside tilpasses kunden, målene og merkevaren.", mark: "04 / ∙" }
+      { title: "SKREDDERSYDD DESIGN", description: "Et visuelt uttrykk bygget rundt bedriften din og menneskene du vil nå.", mark: "01 / ✳" },
+      { title: "MOBIL FØRST", description: "Innhold og knapper utformes for å være enkle å bruke på mobil.", mark: "02 / ↗" },
+      { title: "RESPONSIV UTVIKLING", description: "Nettsiden tilpasser seg mobil, nettbrett og større skjermer.", mark: "03 / →" },
+      { title: "SEO-VENNLIG GRUNNLAG", description: "Ryddig struktur og metadata gir et godt teknisk utgangspunkt for synlighet.", mark: "04 / ∙" },
+      { title: "TYDELIG SAMARBEID", description: "Du får oversikt over leveranser, avklaringer og neste steg underveis.", mark: "05 / +" },
+      { title: "FRA IDÉ TIL LANSERING", description: "Design og utvikling samles i en helhetlig prosess frem mot publisering.", mark: "06 / ↗"}
     ],
+    evaluationEyebrow: "USIKKER PÅ HVA DU TRENGER?", evaluationTitle: "Få en gratis<br><span>vurdering.</span>",
+    evaluationBody: "Fortell kort om bedriften og nettsiden du ser for deg. Jeg vurderer behovet og foreslår et godt neste steg – helt uforpliktende.",
+    evaluationButton: "BE OM GRATIS VURDERING",
     orderEyebrow: "FORTELL MEG OM IDEEN DIN", orderTitle: "La oss bygge<br><span>nettsiden din.</span>",
-    orderIntro: "Fortell litt om bedriften og hva du trenger. Så tar vi en uforpliktende prat om riktig løsning.",
+    orderIntro: "Send en uforpliktende forespørsel med litt om bedriften og behovet ditt. Jeg tar kontakt for å avklare et godt neste steg.",
     orderEmailLabel: "FORETREKKER DU E-POST?", formTitle: "NETTSIDEFORESPØRSEL",
     fieldName: "NAVN", fieldBusiness: "BEDRIFTENS NAVN", fieldEmail: "E-POST", fieldPhone: "TELEFON",
     fieldService: "VELG EN TJENESTE", fieldBudget: "BUDSJETT", fieldProject: "FORTELL OM PROSJEKTET",
     namePlaceholder: "Fullt navn", businessPlaceholder: "Bedrift eller merkevare", emailPlaceholder: "deg@eksempel.no", phonePlaceholder: "+47", projectPlaceholder: "Hva trenger du hjelp med?",
     servicePrompt: "Velg en tjeneste", budgetPrompt: "Velg et budsjett", customProject: "Tilpasset prosjekt",
-    budgetOptions: ["Under 3 000 NOK", "3 000–5 000 NOK", "5 000–8 000 NOK", "8 000+ NOK", "Usikker ennå"],
+    budgetOptions: ["Under 6 000 NOK", "6 000–10 000 NOK", "10 000–15 000 NOK", "Over 15 000 NOK", "Usikker ennå"],
     selectedAddons: "VALGTE TILLEGG", formNote: "Informasjonen sendes sikkert til oss gjennom dette skjemaet.",
     sendRequest: "SEND FORESPØRSEL", submittingRequest: "SENDER FORESPØRSEL…", requestFailed: "Forespørselen kunne ikke sendes akkurat nå. Prøv igjen om litt.",
     requestSent: "Forespørselen er sendt.", requestPrepared: "FORESPØRSEL MOTTATT", thankYou: "TUSEN TAKK!", requestReady: "Forespørselen din er sendt. Jeg tar kontakt snart.",
@@ -114,67 +135,87 @@ const translations = {
     navHome: "Home", navServices: "Services", navPricing: "Pricing", navProcess: "Process", navContact: "Contact",
     socialLabel: "Social media", languageLabel: "Choose language", norwegianLabel: "Norwegian", englishLabel: "English",
     switchToDark: "Switch to dark mode", switchToLight: "Switch to light mode",
-    heroEyebrow: "INDEPENDENT DIGITAL STUDIO · BERGEN", heroTitle: "YOUR WEBSITE.<br><span>BUILT TO</span><br><span class=\"text-outline\">STAND OUT.</span>",
-    heroSubtitle: "Modern, fast and responsive websites for businesses, creators and brands.",
-    orderButton: "ORDER A WEBSITE", viewServices: "VIEW SERVICES", heroNote: "DESIGNED FOR PEOPLE BUILDING SOMETHING",
+    heroEyebrow: "INDEPENDENT DIGITAL STUDIO · BERGEN", heroTitle: "Web design in Bergen.<br><span>Modern websites</span><br><span class=\"text-outline\">for businesses.</span>",
+    heroSubtitle: "I design and build modern websites for small businesses, from the first idea to launch. Thoughtful websites made to work on mobile and desktop.",
+    orderButton: "ORDER A WEBSITE", viewServices: "VIEW MY WORK", heroNote: "DESIGNED FOR PEOPLE BUILDING SOMETHING",
     heroVisualLabel: "Website concept displayed on a computer screen", heroImageAlt: "Web design and development workspace",
     previewHeadline: "Ideas, made<br><span>digital.</span>", previewFooter: "DESIGN WITH INTENT",
     heroVisualCaption: "FROM FIRST SKETCH TO FINAL DETAIL", heroBottom: "BUILT WITH CLEAR INTENT", scrollServices: "Scroll to services",
     manifestoIndex: "A STRONG FIRST IMPRESSION", manifestoEyebrow: "YOUR WEBSITE IS OFTEN YOUR BRAND'S FIRST HELLO",
     manifestoTitle: "Make it<br><span>memorable.</span>",
-    manifestoBody: "A good website does more than look right. It helps people understand what you offer, trust your business and take the next step.",
-    servicesEyebrow: "SERVICES", servicesTitle: "WHAT I CAN<br><span>BUILD.</span>",
-    servicesIntro: "Clear deliverables, thoughtful design and a website built around what you actually need.",
+    manifestoBody: "Your website should make it easy to understand what you offer and how to get in touch. I build with clear content, considered design and mobile use in mind.",
+    valuePoints: ["Custom design for your business", "Mobile considered from the first sketch", "Responsive development for phones, tablets and desktop", "SEO-friendly structure and technical foundations", "Norwegian and English when the project needs it", "From idea and content through to launch"],
+    servicesEyebrow: "SERVICES", servicesTitle: "WHAT I CAN<br><span>HELP WITH.</span>",
+    servicesIntro: "From the first visual direction to a finished website — choose the services your project needs.",
+    serviceCategories: [
+      { title: "Web design", description: "A clear visual direction and a custom look that fits your brand and your customers." },
+      { title: "Web development", description: "Turning the design into a working website with structure and content for your business." },
+      { title: "Responsive design", description: "A considered experience on phones, tablets and larger screens." },
+      { title: "SEO foundations", description: "Semantic content and technical structure give search engines a clear starting point." },
+      { title: "Functionality", description: "Booking, forms and other features can be tailored to the needs of your project." },
+      { title: "Website redesign", description: "Refresh the look, content and user experience of an existing website." }
+    ],
     addonsEyebrow: "MAKE IT MORE", addonsTitle: "Optional add-ons", addonsIntro: "Select add-ons in the order form and I will include them in your request.",
-    pricingNote: "All prices are indicative starting prices in NOK. Final scope is agreed before work begins.",
-    serviceNames: { landing: "Landing Page", business: "Business Website", premium: "Premium Website" },
+    pricingEyebrow: "CLEAR STARTING PRICES", pricingTitle: "CHOOSE A<br><span>STARTING POINT.</span>",
+    pricingIntro: "Prices are a starting point. We agree on content, scope and the final price before work begins.",
+    pricingNote: "Starting prices in NOK. Final scope and price are agreed before work begins.",
+    packageTag: "WEBSITE PACKAGE", recommended: "RECOMMENDED",
+    serviceNames: { landing: "Starter", business: "Business", premium: "Premium", custom: "Custom" },
     serviceDescriptions: {
-      landing: "A clear, modern starting point for businesses that need a confident online presence.",
-      business: "A complete website for a small business, built to answer customer questions and invite contact.",
-      premium: "A more advanced website for businesses looking for a distinctive digital experience."
+      landing: "A professional landing page with clear content and a simple path to get in touch.",
+      business: "A complete business website with up to five pages, a contact form and basic SEO.",
+      premium: "A more extensive website with custom design and expanded functionality.",
+      custom: "A tailored scope and feature set based on your project goals."
     },
     serviceFeatures: {
-      landing: ["Modern design", "Responsive layout", "Mobile optimization", "Contact buttons", "Basic animations"],
+      landing: ["One landing page", "Responsive design", "Contact links", "Basic SEO"],
       business: ["Up to 5 pages", "Custom design", "Responsive design", "Contact form", "Social media integration", "Animations", "SEO basics"],
-      premium: ["Custom UI/UX", "Advanced animations", "Booking functionality", "Multi-language support", "Advanced responsive design", "SEO optimization", "Custom interactions"]
+      premium: ["Custom design", "Responsive development", "Expanded functionality", "Advanced SEO work"],
+      custom: ["Scope tailored to the project", "Features based on your needs", "Price agreed before work begins"]
     },
-    priceFrom: "From", orderService: "ORDER", serviceTag: "WEBSITE SERVICE",
+    priceFrom: "From",
     addons: {
       booking: "Online booking", extraPage: "Extra page", languages: "Norwegian + English", animations: "Advanced animations", custom: "Custom functionality"
     },
     addonPrice: "Price", contactForPrice: "Contact for price", addonSelect: "Add to request",
     processEyebrow: "A CLEAR PROCESS", processTitle: "From first thought<br><span>to go-live.</span>",
-    processIntro: "You always know what is happening, what I need from you, and what comes next.",
+    processIntro: "Four clear steps take the project from understanding your needs and design through development, review and launch.",
     process: [
-      { title: "Tell me what you need", description: "We clarify your goals, content and what the website needs to do for your business." },
-      { title: "I create the design", description: "I shape the visual direction and build a working first version." },
-      { title: "You review the website", description: "You share feedback, and we refine the details together." },
-      { title: "Your website goes live", description: "Once approved, the website is prepared for launch." }
+      { title: "Clarify your needs", description: "We discuss your goals, content, scope and what the website should do for your customers." },
+      { title: "Design the direction", description: "I shape a visual style and structure that fit your brand and content." },
+      { title: "Build and refine", description: "The website is developed, you review it, and we make the agreed refinements." },
+      { title: "Prepare for launch", description: "Once approved, the website is made ready for publication." }
     ],
     portfolioEyebrow: "SELECTED CONCEPTS", portfolioTitle: "SELECTED<br><span>WORK.</span>",
     portfolioIntro: "Concepts showing how considered design can give small brands a stronger presence online.",
     portfolioDisclaimer: "These projects are concepts and demos, not commissioned work for real clients.", concept: "CONCEPT", demo: "DEMO",
+    projectTypes: { cleancar: "CAR CARE · BOOKING FLOW", local: "LOCAL SERVICE BUSINESS", creative: "PERSONAL BRAND · LANDING PAGE" },
     projects: {
       cleancar: { name: "CleanCar Bergen", description: "A car-care concept with a clear service menu and a simple online booking flow.", alt: "Glossy sports car concept image for CleanCar Bergen" },
       local: { name: "Local Business", description: "A warm, considered website concept for a neighborhood service business.", alt: "Bright modern workplace for the Local Business website concept" },
       creative: { name: "Creative Landing Page", description: "A visual landing page concept for a personal brand and creative offering.", alt: "Digital project overview for a creative landing page concept" }
     },
-    viewProject: "VIEW CONCEPT", projectDialogLabel: "Project concept", conceptNote: "Concept work — not a published client project.", closeDialog: "Close project preview",
+    viewProject: "VIEW PROJECT", projectDialogLabel: "Project concept", conceptNote: "Concept work — not a published client project.", closeDialog: "Close project preview",
     whyEyebrow: "A COLLABORATION WITH INTENT", whyTitle: "Why<br><span>choose me?</span>",
     benefits: [
-      { title: "MODERN DESIGN", description: "Websites designed with a contemporary, considered visual style.", mark: "01 / ✳" },
+      { title: "CUSTOM DESIGN", description: "A visual style built around your business and the people you want to reach.", mark: "01 / ✳" },
       { title: "MOBILE FIRST", description: "Everything works properly on phones, tablets and computers.", mark: "02 / ↗" },
-      { title: "FAST DELIVERY", description: "Efficient development, steady progress and clear communication.", mark: "03 / →" },
-      { title: "PERSONAL APPROACH", description: "Every website is shaped around the client, their goals and their brand.", mark: "04 / ∙" }
+      { title: "RESPONSIVE DEVELOPMENT", description: "The website adapts to phones, tablets and larger screens.", mark: "03 / →" },
+      { title: "SEO-FRIENDLY FOUNDATIONS", description: "Clear structure and metadata provide a sound technical starting point.", mark: "04 / ∙" },
+      { title: "CLEAR COLLABORATION", description: "You know what is being delivered, what needs agreement and what comes next.", mark: "05 / +" },
+      { title: "FROM IDEA TO LAUNCH", description: "Design and development come together in a clear process through publication.", mark: "06 / ↗"}
     ],
+    evaluationEyebrow: "NOT SURE WHAT YOU NEED?", evaluationTitle: "Get a free<br><span>assessment.</span>",
+    evaluationBody: "Tell me a little about your business and the website you have in mind. I will assess what you need and suggest a sensible next step, with no obligation.",
+    evaluationButton: "REQUEST A FREE ASSESSMENT",
     orderEyebrow: "TELL ME ABOUT YOUR IDEA", orderTitle: "Let's build<br><span>your website.</span>",
-    orderIntro: "Tell me a little about your business and what you need. We can talk through the right solution, with no obligation.",
+    orderIntro: "Send a no-obligation request with a little about your business and what you need. I will be in touch to discuss a sensible next step.",
     orderEmailLabel: "PREFER EMAIL?", formTitle: "WEBSITE REQUEST",
     fieldName: "NAME", fieldBusiness: "BUSINESS NAME", fieldEmail: "EMAIL", fieldPhone: "PHONE NUMBER",
     fieldService: "CHOOSE A SERVICE", fieldBudget: "BUDGET", fieldProject: "TELL ME ABOUT THE PROJECT",
     namePlaceholder: "Full name", businessPlaceholder: "Business or brand", emailPlaceholder: "you@example.com", phonePlaceholder: "+47", projectPlaceholder: "What do you need help with?",
     servicePrompt: "Choose a service", budgetPrompt: "Choose a budget", customProject: "Custom Project",
-    budgetOptions: ["Under 3,000 NOK", "3,000–5,000 NOK", "5,000–8,000 NOK", "8,000+ NOK", "Not sure yet"],
+    budgetOptions: ["Under 6,000 NOK", "6,000–10,000 NOK", "10,000–15,000 NOK", "Over 15,000 NOK", "Not sure yet"],
     selectedAddons: "SELECTED ADD-ONS", formNote: "Your information is sent securely to us using this form.",
     sendRequest: "SEND REQUEST", submittingRequest: "SENDING REQUEST…", requestFailed: "Your request couldn't be sent right now. Please try again shortly.",
     requestSent: "Your request has been sent.", requestPrepared: "REQUEST RECEIVED", thankYou: "THANK YOU!", requestReady: "Your request has been sent. I'll be in touch soon.",
@@ -260,17 +301,36 @@ function formatPrice(value) {
 
 function renderServiceCards() {
   const copy = translations[currentLanguage];
-  serviceGrid.innerHTML = siteConfig.services.map((service, index) => {
+  serviceGrid.innerHTML = copy.serviceCategories.map((category, index) => `<article class="service-offering" data-reveal>
+    <span class="service-offering__number">0${index + 1}</span>
+    <h3>${category.title}</h3>
+    <p>${category.description}</p>
+  </article>`).join("");
+  observeReveals(serviceGrid);
+}
+
+function renderValuePoints() {
+  const valueList = document.querySelector("#value-points");
+  valueList.innerHTML = translations[currentLanguage].valuePoints.map((point) => `<li>${point}</li>`).join("");
+}
+
+function renderPricingCards() {
+  const copy = translations[currentLanguage];
+  const pricingGrid = document.querySelector("#pricing-grid");
+  pricingGrid.innerHTML = siteConfig.services.map((service, index) => {
     const features = copy.serviceFeatures[service.id].map((feature) => `<li>${feature}</li>`).join("");
-    return `<article class="service-card" data-reveal>
-      <div class="service-card__top"><span class="service-card__index">0${index + 1} / ${copy.serviceTag}</span><span class="service-card__marker" aria-hidden="true">0${index + 1}</span></div>
+    const recommended = service.id === "business";
+    return `<article class="pricing-card${recommended ? " pricing-card--recommended" : ""}" data-reveal${recommended ? ' aria-label="' + copy.recommended + '"' : ""}>
+      ${recommended ? `<span class="pricing-card__badge">${copy.recommended}</span>` : ""}
+      <div class="pricing-card__top"><span>${copy.packageTag}</span><span>0${index + 1}</span></div>
       <h3>${copy.serviceNames[service.id]}</h3>
-      <p class="service-card__description">${copy.serviceDescriptions[service.id]}</p>
+      <p class="pricing-card__description">${copy.serviceDescriptions[service.id]}</p>
+      <p class="pricing-card__price"><small>${copy.priceFrom}</small><strong>${formatPrice(service.price)} <span>NOK</span></strong></p>
       <ul class="service-card__features">${features}</ul>
-      <div class="service-card__bottom"><span class="service-card__price"><small>${copy.priceFrom}</small>${formatPrice(service.price)} NOK</span><button class="service-card__order" type="button" data-order-service="${service.id}">${copy.orderService}<span aria-hidden="true">↗</span></button></div>
+      <a class="button button--quiet pricing-card__cta" href="#order" data-order-service="${service.id}"><span>${copy.orderButton}</span><span class="button__arrow" aria-hidden="true">↗</span></a>
     </article>`;
   }).join("");
-  observeReveals(serviceGrid);
+  observeReveals(pricingGrid);
 }
 
 function renderAddons() {
@@ -296,7 +356,7 @@ function renderProjectCards() {
         <img src="${project.image}" alt="${details.alt}" loading="lazy">
         <span class="portfolio-card__label">${label}</span><span class="portfolio-card__open" aria-hidden="true">↗</span>
       </button>
-      <div class="portfolio-card__meta"><div><h3>${details.name}</h3><p>${details.description}</p></div><span class="portfolio-card__number">0${index + 1}</span></div>
+      <div class="portfolio-card__meta"><div><span class="portfolio-card__type">${copy.projectTypes[project.id]}</span><h3>${details.name}</h3><p>${details.description}</p><button class="portfolio-card__link" type="button" data-project="${project.id}">${copy.viewProject}<span aria-hidden="true"> ↗</span></button></div><span class="portfolio-card__number">0${index + 1}</span></div>
     </article>`;
   }).join("");
   observeReveals(portfolioGrid);
@@ -320,7 +380,6 @@ function renderSelectOptions() {
   const previousBudget = budgetSelect.value;
   serviceSelect.replaceChildren(new Option(copy.servicePrompt, "", true, !previousService));
   siteConfig.services.forEach((service) => serviceSelect.add(new Option(copy.serviceNames[service.id], service.id)));
-  serviceSelect.add(new Option(copy.customProject, "custom"));
   serviceSelect.value = previousService;
 
   budgetSelect.replaceChildren(new Option(copy.budgetPrompt, "", true, !previousBudget));
@@ -412,6 +471,8 @@ function setLanguage(language) {
 
   renderSelectOptions();
   renderServiceCards();
+  renderValuePoints();
+  renderPricingCards();
   renderAddons();
   renderProjectCards();
   renderProcess();
@@ -552,11 +613,12 @@ menuToggle.addEventListener("click", () => {
 
 document.querySelectorAll("[data-language]").forEach((button) => button.addEventListener("click", () => setLanguage(button.dataset.language)));
 themeToggle.addEventListener("click", () => setTheme(currentTheme === "light" ? "dark" : "light"));
-function scrollToOrder(updateHash = false) {
-  if (updateHash && window.location.hash !== "#order") {
-    window.history.pushState(null, "", "#order");
+function scrollToSection(sectionId, updateHash = false) {
+  if (updateHash && window.location.hash !== `#${sectionId}`) {
+    window.history.pushState(null, "", `#${sectionId}`);
   }
-  const orderSection = document.querySelector("#order");
+  const targetSection = document.getElementById(sectionId);
+  if (!targetSection) return;
   const header = document.querySelector(".header");
   const headerRect = header.getBoundingClientRect();
   const headerPosition = window.getComputedStyle(header).position;
@@ -564,24 +626,20 @@ function scrollToOrder(updateHash = false) {
     ? headerRect.bottom
     : 0;
   const breathingRoom = Math.max(12, Math.min(28, window.innerHeight * 0.025));
-  const targetTop = window.scrollY + orderSection.getBoundingClientRect().top - headerOffset - breathingRoom;
+  const targetTop = window.scrollY + targetSection.getBoundingClientRect().top - headerOffset - breathingRoom;
   const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
   window.scrollTo({ top: Math.max(0, targetTop), behavior });
 }
 
 document.addEventListener("click", (event) => {
-  const bookingLink = event.target.closest('a[href="#order"]');
-  if (!bookingLink) return;
+  const sectionLink = event.target.closest('a[href="#order"], a[href="#portfolio"]');
+  if (!sectionLink) return;
   event.preventDefault();
-  scrollToOrder(true);
-});
-
-serviceGrid.addEventListener("click", (event) => {
-  const button = event.target.closest("[data-order-service]");
-  if (!button) return;
-  serviceSelect.value = button.dataset.orderService;
-  scrollToOrder();
-  serviceSelect.focus({ preventScroll: true });
+  if (sectionLink.dataset.orderService) {
+    serviceSelect.value = sectionLink.dataset.orderService;
+    serviceSelect.focus({ preventScroll: true });
+  }
+  scrollToSection(sectionLink.hash.slice(1), true);
 });
 
 document.addEventListener("click", (event) => {
